@@ -1,1 +1,1 @@
-# AzureCli_install_LAD3.0
+# AzCli install LAD3.0
