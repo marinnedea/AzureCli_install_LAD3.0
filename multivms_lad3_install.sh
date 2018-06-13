@@ -13,8 +13,6 @@ exec 1>$logfile 2>&1
 # Logging the start date and time
 date +"%F_%R"
 
-
-
 # Configuration details for LAD 3.0
 read -p 'Diagnostic Account: ' diagstgacct  
 read -p 'Diagnostic Account Sas Token: ' accsastoken
