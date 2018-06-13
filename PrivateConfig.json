@@ -1,0 +1,39 @@
+{
+  "storageAccountName": "yourdiagstgacct",
+  "storageAccountSasToken": "youraccsastoken",
+  "sinksConfig": {
+    "sink": [
+      {
+        "name": "SyslogJsonBlob",
+        "type": "JsonBlob"
+      },
+      {
+        "name": "FilelogJsonBlob",
+        "type": "JsonBlob"
+      },
+      {
+        "name": "LinuxCpuJsonBlob",
+        "type": "JsonBlob"
+      },
+      {
+        "name": "MyJsonMetricsBlob",
+        "type": "JsonBlob"
+      },
+      {
+        "name": "LinuxCpuEventHub",
+        "type": "EventHub",
+        "sasURL": "https://youreventhubnamespace.servicebus.windows.net/youreventhubpublisher?sr=https%3a%2f%2fyoureventhubnamespace.servicebus.windows.net%2fyoureventhubpublisher%2f&sig=fake_signature&se=1808096361&skn=yourehpolicy"
+      },
+      {
+        "name": "MyMetricEventHub",
+        "type": "EventHub",
+        "sasURL": "https://youreventhubnamespace.servicebus.windows.net/youreventhubpublisher?sr=https%3a%2f%2fyoureventhubnamespace.servicebus.windows.net%2fyoureventhubpublisher%2f&sig=yourehpolicy&skn=yourehpolicy"
+      },
+      {
+        "name": "LoggingEventHub",
+        "type": "EventHub",
+        "sasURL": "https://youreventhubnamespace.servicebus.windows.net/youreventhubpublisher?sr=https%3a%2f%2fyoureventhubnamespace.servicebus.windows.net%2fyoureventhubpublisher%2f&sig=yourehpolicy&se=1808096361&skn=yourehpolicy"
+      }
+    ]
+  }
+}

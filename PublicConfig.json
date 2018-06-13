@@ -1,0 +1,74 @@
+{
+  "StorageAccount": "yourdiagstgacct",
+  "sampleRateInSeconds": 15,
+  "ladCfg": {
+    "diagnosticMonitorConfiguration": {
+      "performanceCounters": {
+        "sinks": "MyMetricEventHub,MyJsonMetricsBlob",
+        "performanceCounterConfiguration": [
+          {
+            "unit": "Percent",
+            "type": "builtin",
+            "counter": "PercentProcessorTime",
+            "counterSpecifier": "/builtin/Processor/PercentProcessorTime",
+            "annotation": [
+              {
+                "locale": "en-us",
+                "displayName": "Aggregate CPU %utilization"
+              }
+            ],
+            "condition": "IsAggregate=TRUE",
+            "class": "Processor"
+          },
+          {
+            "unit": "Bytes",
+            "type": "builtin",
+            "counter": "UsedSpace",
+            "counterSpecifier": "/builtin/FileSystem/UsedSpace",
+            "annotation": [
+              {
+                "locale": "en-us",
+                "displayName": "Used disk space on /"
+              }
+            ],
+            "condition": "Name=\"/\"",
+            "class": "Filesystem"
+          }
+        ]
+      },
+      "metrics": {
+        "metricAggregation": [
+          {
+            "scheduledTransferPeriod": "PT1H"
+          },
+          {
+            "scheduledTransferPeriod": "PT1M"
+          }
+        ],
+        "resourceId": "/subscriptions/your_azure_subscription_id/resourceGroups/your_resource_group_name/providers/Microsoft.Compute/virtualMachines/your_vm_name"
+      },
+      "eventVolume": "Large",
+      "syslogEvents": {
+        "sinks": "SyslogJsonBlob,LoggingEventHub",
+        "syslogEventConfiguration": {
+          "LOG_USER": "LOG_INFO"
+        }
+      }
+    }
+  },
+  "perfCfg": [
+    {
+      "query": "SELECT PercentProcessorTime, PercentIdleTime FROM SCX_ProcessorStatisticalInformation WHERE Name='_TOTAL'",
+      "table": "LinuxCpu",
+      "frequency": 60,
+      "sinks": "LinuxCpuJsonBlob,LinuxCpuEventHub"
+    }
+  ],
+  "fileLogs": [
+    {
+      "file": "/var/log/myladtestlog",
+      "table": "MyLadTestLog",
+      "sinks": "FilelogJsonBlob,LoggingEventHub"
+    }
+  ]
+}
