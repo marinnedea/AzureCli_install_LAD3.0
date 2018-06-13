@@ -5,9 +5,18 @@ This script will use the details you input to install LAD 3.0 on all Linux VMs i
 * The details for LAD configuration must be set in advance in the Azure Portal.
 
 ## Script execution
-* Save the script in a location of you choice, e.g: /home/you_username
-* make the script executable: chmod +x script_name.sh 
-* execute the script: ./script_name.sh
+* Save the script in a location of you choice, e.g: 
+```shell
+/home/you_username
+```
+* make the script executable: 
+```shell
+chmod +x script_name.sh
+```
+* execute the script:
+```shell
+./script_name.sh
+```
 ## Note
 * replace script_name.sh with the actual script name
 * All VMs will be updated one by one, the script doesn't run any parallel tasks, therefore, for a large pool of VMs, expect to take a long time to complete. 
