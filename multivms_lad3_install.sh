@@ -21,8 +21,6 @@ read -p 'Diagnostic Account Sas Token: ' accsastoken
 read -p 'Event Hub Name Space: ' eventhubnamespace
 read -p 'Event Hub publisher: ' eventhubpublisher
 read -p 'Event Hub policy: ' ehpolicy
-read -p 'Azure Subscription ID: ' azure_subscription_id
-
 
 # Reconfigure the PrivateConfig.json file
 sed -i "s#yourdiagstgacct#$diagstacct#g" PrivateConfig.json
@@ -39,10 +37,8 @@ sed -i "s#your_azure_subscription_id#$azure_subscription_id#g" PublicConfig.json
 az account list -o tsv
 read -p 'Type (or copy/paste from above) the subscription ID you wish to use further: ' azure_subscription_id
 
-
 # Switch to the desired subscription ID
-az account set --subscription $sID
-
+az account set --subscription $azure_subscription_id
 
 # List all Resource Groups
 declare -a rgarray="$(az group list  --query '[].name' -o tsv)"
@@ -117,7 +113,6 @@ else
 	fi
 	done  
 fi
-
 
 date +"%F_%R"
 exit 0
