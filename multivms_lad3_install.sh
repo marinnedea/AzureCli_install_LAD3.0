@@ -54,7 +54,7 @@ else
 
 	#check if array is empty
 	if [ -z "$vmarray" ]; then
-			echo "No VM in $rgName" 				
+		echo "No VM in $rgName" 				
 	else							
 		for j in ${vmarray[@]}; do
 		vmName=$j;	
@@ -67,8 +67,8 @@ else
 			az vm start -g $rgName -n $vmName
 		else
 			echo "VM $vmName is already in running state."	
-		fi
-				
+		fi		
+		
 		# Get the Operating System
 		vm_os="$(az vm get-instance-view -g $rgName -n $vmName | grep -i osType| awk -F '"' '{printf $4 "\n"}')"
 		
@@ -81,26 +81,25 @@ else
 			extname=LinuxDiagnostic
 			if [[ " ${installedExt[@]} " =~ " $extName " ]]; then
 			
+			# Modify the PublicConfig.json file with the VM details
+			sed -i "s#your_resource_group_name#$rgName#g" PublicConfig.json
+			sed -i "s#your_vm_name#$vmName#g" PublicConfig.json
+			
 			# Check version of it
 			ext_vers="$(az vm extension list -g nmjumpboxaz --vm-name $vmName --query "[?contains(name, 'LinuxDiagnostic')].typeHandlerVersion" -o tsv)"
 				if [[ "$extversion" < 3 ]] ;
 					echo 'LAD 2.0 installed. Uninstalling it and installing LAD 3.0'	
 					az vm extension delete --name LinuxDiagnostic -g $rgName --vm-name $vmName
 					
-					
-					# Modify the PublicConfig.json file with the VM details
-					sed -i "s#your_resource_group_name#$rgName#g" PublicConfig.json
-					sed -i "s#your_vm_name#$vmName#g" PublicConfig.json
-
 					# Install and configure the LAD 3.0 on each VM $vmName
 					az vm extension set $rgName $vmName LinuxDiagnostic Microsoft.Azure.Diagnostics '3.*' --private-config-path PrivateConfig.json --public-config-path PublicConfig.json
-					
 					echo "$extName 3.0 installed on VM $vmName in RG $rgName."
 				else
 					echo "The extension $extName 3.0 is already installed on the VM $vmName"
 				fi 
 			else 
 				echo "No version of LAD installed on this VM. Installing LAD 3.0"
+				# Install the LAD 3.0 Extension 
 				az vm extension set $rgName $vmName LinuxDiagnostic Microsoft.Azure.Diagnostics '3.*' --private-config-path PrivateConfig.json --public-config-path PublicConfig.json
 			fi
 			
