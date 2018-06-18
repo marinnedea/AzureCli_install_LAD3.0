@@ -26,6 +26,8 @@ chmod +x script_name.sh
 * https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/diagnostics-linux#installing-and-configuring-lad-30-via-cli
 * https://docs.microsoft.com/en-us/cli/azure/vm/extension?view=azure-cli-latest#az-vm-extension-list
 
+Please note that this script is based on the above links. The only difference is that this script is built to run through all the VMs in a subscription ID and install the extension on each, one by one.
+
 
 ## Disclaimer
 * This script is provided "as it is" without any waranty. Please make sure you test it in a non production environment before using it in a production one.
